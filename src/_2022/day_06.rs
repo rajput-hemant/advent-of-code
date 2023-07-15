@@ -80,6 +80,33 @@ pub fn part_1(input: &str) -> usize {
         + 4 // add 4 as it will give the index of the last byte of the 4 bytes
 }
 
+/*
+--- Part Two ---
+Your device's communication system is correctly detecting packets, but still isn't working.
+It looks like it also needs to look for messages.
+
+A start-of-message marker is just like a start-of-packet marker, except it consists of 14
+distinct characters rather than 4.
+
+Here are the first positions of start-of-message markers for all of the above examples:
+
+mjqjpqmgbljsphdztnvjfqwrcgsmlb: first marker after character 19
+bvwbjplbgvbhsrlpgdmjqwftvncz: first marker after character 23
+nppdvjthqldpwncqszvftbrmjlhg: first marker after character 23
+nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg: first marker after character 29
+zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 26
+
+How many characters need to be processed before the first start-of-message marker is detected?*/
+pub fn part_2(input: &str) -> usize {
+    input
+        .as_bytes() // convert to bytes
+        .windows(14) // get windows of 14 bytes
+        // collect into hashset and if length is 14, all bytes are unique
+        .position(|b| b.iter().collect::<HashSet<_>>().len() == 14)
+        .unwrap()
+        + 14 // add 14 as it will give the index of the last byte of the 14 bytes
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -97,5 +124,14 @@ mod tests {
         assert_eq!(part_1(BUFFER3), 6);
         assert_eq!(part_1(BUFFER4), 10);
         assert_eq!(part_1(BUFFER5), 11);
+    }
+
+    #[test]
+    fn part_2_test() {
+        assert_eq!(part_2(BUFFER1), 19);
+        assert_eq!(part_2(BUFFER2), 23);
+        assert_eq!(part_2(BUFFER3), 23);
+        assert_eq!(part_2(BUFFER4), 29);
+        assert_eq!(part_2(BUFFER5), 26);
     }
 }
