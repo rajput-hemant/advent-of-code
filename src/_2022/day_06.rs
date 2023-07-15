@@ -45,18 +45,39 @@ zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 11
 
 How many characters need to be processed before the first start-of-packet marker is detected?
 */
+// pub fn part_1(input: &str) -> usize {
+//     (3..input.len()) // range of 3 to input length
+//         .find(|&i| {
+//             let slice = &input[i - 3..=i]; // get slice of 4 characters
+//             slice
+//                 .chars()
+//                 .collect::<Vec<_>>() // collect into vector of chars
+//                 .iter()
+//                 .all(|&c| slice.matches(c).count() == 1) // check if all chars are unique
+//         })
+//         .unwrap()
+//         + 1 // add 1 to account for 0-indexing
+// }
+
+use std::collections::HashSet;
+
 pub fn part_1(input: &str) -> usize {
-    (3..input.len()) // range of 3 to input length
-        .find(|&i| {
-            let slice = &input[i - 3..=i]; // get slice of 4 characters
-            slice
-                .chars()
-                .collect::<Vec<_>>() // collect into vector of chars
-                .iter()
-                .all(|&c| slice.matches(c).count() == 1) // check if all chars are unique
-        })
+    input
+        .as_bytes() // convert to bytes
+        .windows(4) // get windows of 4 bytes
+        // check if all bytes are unique
+        // .position(|b| {
+        //     b[0] != b[1]
+        //         && b[0] != b[2]
+        //         && b[0] != b[3]
+        //         && b[1] != b[2]
+        //         && b[1] != b[3]
+        //         && b[2] != b[3]
+        // })
+        // collect into hashset and if length is 4, all bytes are unique
+        .position(|b| b.iter().collect::<HashSet<_>>().len() == 4)
         .unwrap()
-        + 1 // add 1 to account for 0-indexing
+        + 4 // add 4 as it will give the index of the last byte of the 4 bytes
 }
 
 #[cfg(test)]
