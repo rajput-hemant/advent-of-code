@@ -23,6 +23,20 @@ pub fn part_1(input: &str) -> String {
     }
 }
 
+pub fn part_2(input: &str) -> String {
+    let mut i = 0;
+
+    loop {
+        let hash = md5::compute(format!("{input}{i}",));
+
+        if hash[0] == 0 && hash[1] == 0 && hash[2] == 0 {
+            return i.to_string();
+        }
+
+        i += 1;
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -31,5 +45,11 @@ mod tests {
     fn part_1_example() {
         assert_eq!(part_1("abcdef"), "609043");
         assert_eq!(part_1("pqrstuv"), "1048970");
+    }
+
+    #[test]
+    fn part_2_example() {
+        assert_eq!(part_2("abcdef"), "6742839");
+        assert_eq!(part_2("pqrstuv"), "5714438");
     }
 }
