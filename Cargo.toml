@@ -7,3 +7,5 @@ authors = ["Hemant Rajput <rajput.hemant2001@gmail.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+md5 = "0.7.0"
+
