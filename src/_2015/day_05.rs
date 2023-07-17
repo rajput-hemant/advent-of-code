@@ -13,6 +13,24 @@ pub fn part_1(input: &str) -> String {
         .to_string()
 }
 
+pub fn part_2(input: &str) -> String {
+    input
+        .lines()
+        .filter(|line| {
+            let line_bytes = line.as_bytes();
+
+            // contains a pair of any two letters that appears at least twice in the string without overlapping
+            line_bytes.windows(2).any(|w| {
+                let s = std::str::from_utf8(w).unwrap();
+                line.matches(&s).count() > 1
+            }) 
+            // contains at least one letter which repeats with exactly one letter between them
+            && line_bytes.windows(3).any(|w| w[0] == w[2])
+        })
+        .count()
+        .to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -24,5 +42,13 @@ mod tests {
         assert_eq!(part_1("jchzalrnumimnmhp"), "0");
         assert_eq!(part_1("haegwjzuvuyypxyu"), "0");
         assert_eq!(part_1("dvszwmarrgswjxmb"), "0");
+    }
+
+    #[test]
+    fn part_2_test() {
+        assert_eq!(part_2("qjhvhtzxzqqjkmpb"), "1");
+        assert_eq!(part_2("xxyxx"), "1");
+        assert_eq!(part_2("uurcxstgmygtbstg"), "0");
+        assert_eq!(part_2("ieodomkazucvgmuy"), "0");
     }
 }
