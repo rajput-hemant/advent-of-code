@@ -25,6 +25,26 @@ pub fn part_1(input: &str) -> String {
         .to_string()
 }
 
+pub fn part_2(input: &str) -> String {
+    input
+        .lines()
+        .map(|line| {
+            let (mut count, mut chars) = (2, line.chars()); // 2 for the surrounding quotes
+
+            while let Some(c) = chars.next() {
+                match c {
+                    '\\' => count += 2,
+                    '"' => count += 2,
+                    _ => count += 1,
+                }
+            }
+
+            count - line.len()
+        })
+        .sum::<usize>()
+        .to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -40,10 +60,26 @@ mod tests {
                 r#"""
         "abc"
         "aaa\"aaa"
-        "\x27"
-        "#
+        "\x27""#
             ),
             "12"
+        );
+    }
+
+    #[test]
+    fn part_2_test() {
+        assert_eq!(part_2(r#""""#), "4");
+        assert_eq!(part_2(r#""abc""#), "4");
+        assert_eq!(part_2(r#""aaa\"aaa""#), "6");
+        assert_eq!(part_2(r#""\x27""#), "5");
+        assert_eq!(
+            part_2(
+                r#"""
+        "abc"
+        "aaa\"aaa"
+        "\x27""#
+            ),
+            "19"
         );
     }
 }
