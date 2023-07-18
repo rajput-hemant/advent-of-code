@@ -21,6 +21,15 @@ pub fn part_1(input: &str) -> String {
         .to_string()
 }
 
+pub fn part_1_reg(input: &str) -> String {
+    regex::Regex::new(r"-?\d+")
+        .unwrap()
+        .find_iter(input)
+        .map(|m| m.as_str().parse::<i32>().unwrap())
+        .sum::<i32>()
+        .to_string()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -35,5 +44,14 @@ mod tests {
         assert_eq!(part_1(r#"[-1,{"a":1}]"#), "0");
         assert_eq!(part_1("[]"), "0");
         assert_eq!(part_1("{}"), "0");
+
+        assert_eq!(part_1_reg("[1,2,3]"), "6");
+        assert_eq!(part_1_reg(r#"{"a":2,"b":4}"#), "6");
+        assert_eq!(part_1_reg("[[[3]]]"), "3");
+        assert_eq!(part_1_reg(r#"{"a":{"b":4},"c":-1}"#), "3");
+        assert_eq!(part_1_reg(r#"{"a":[-1,1]}"#), "0");
+        assert_eq!(part_1_reg(r#"[-1,{"a":1}]"#), "0");
+        assert_eq!(part_1_reg("[]"), "0");
+        assert_eq!(part_1_reg("{}"), "0");
     }
 }

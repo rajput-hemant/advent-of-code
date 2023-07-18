@@ -8,4 +8,5 @@ authors = ["Hemant Rajput <rajput.hemant2001@gmail.com>"]
 
 [dependencies]
 md5 = "0.7.0"
+regex = "1.9.1"
 
