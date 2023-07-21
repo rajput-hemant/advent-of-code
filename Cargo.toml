@@ -7,6 +7,7 @@ authors = ["Hemant Rajput <rajput.hemant2001@gmail.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+itertools = "0.11.0"
 md5 = "0.7.0"
 regex = "1.9.1"
 
