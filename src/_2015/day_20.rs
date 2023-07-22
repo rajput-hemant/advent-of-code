@@ -1,9 +1,11 @@
-pub fn part_1(input: String) -> String {
+pub fn part_1(input: &str) -> String {
     let presents: usize = input.parse().unwrap();
 
-    (1..presents)
-        .fold(vec![0; presents], |mut houses, i| {
-            (i..presents).step_by(i).for_each(|j| houses[j] += i * 10);
+    (1..presents / 10) // iter
+        .fold(vec![0; presents / 10], |mut houses, i| {
+            (i..presents / 10)
+                .step_by(i)
+                .for_each(|j| houses[j] += i * 10);
             houses
         })
         .iter()
@@ -12,12 +14,25 @@ pub fn part_1(input: String) -> String {
         .to_string()
 }
 
-pub fn part_2(input: String) -> String {
+// pub fn part_1(input: &str) -> String {
+//     let input = input.parse::<usize>().unwrap();
+//     let mut houses = vec![0; input / 10];
+
+//     for i in 1..input / 10 {
+//         for j in (i..input / 10).step_by(i) {
+//             houses[j] += i * 10;
+//         }
+//     }
+
+//     houses.iter().position(|&x| x >= input).unwrap().to_string()
+// }
+
+pub fn part_2(input: &str) -> String {
     let presents: usize = input.parse().unwrap();
 
-    (1..presents)
-        .fold(vec![0; presents], |mut houses, i| {
-            (i..presents)
+    (1..presents / 11)
+        .fold(vec![0; presents / 11], |mut houses, i| {
+            (i..presents / 11)
                 .step_by(i)
                 .take(50)
                 .for_each(|j| houses[j] += i * 11);
@@ -35,11 +50,11 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1("150".to_string()), "8");
+        assert_eq!(part_1("150"), "8");
     }
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2("150".to_string()), "8");
+        assert_eq!(part_2("150"), "8");
     }
 }
