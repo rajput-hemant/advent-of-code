@@ -1,3 +1,5 @@
+use serde_json::Value;
+
 pub fn part_1(input: &str) -> String {
     input
         .chars()
@@ -30,6 +32,25 @@ pub fn part_1_reg(input: &str) -> String {
         .to_string()
 }
 
+pub fn part_2(input: &str) -> String {
+    sum_json(&serde_json::from_str(input).unwrap()).to_string()
+}
+
+fn sum_json(v: &Value) -> i64 {
+    match v {
+        Value::Number(n) => n.as_i64().unwrap(),
+        Value::Array(a) => a.iter().map(|v| sum_json(v)).sum(),
+        Value::Object(o) => {
+            if o.values().any(|v| v == "red") {
+                0
+            } else {
+                o.values().map(|v| sum_json(v)).sum()
+            }
+        }
+        _ => 0,
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -53,5 +74,13 @@ mod tests {
         assert_eq!(part_1_reg(r#"[-1,{"a":1}]"#), "0");
         assert_eq!(part_1_reg("[]"), "0");
         assert_eq!(part_1_reg("{}"), "0");
+    }
+
+    #[test]
+    fn test_part_2() {
+        assert_eq!(part_2("[1,2,3]"), "6");
+        assert_eq!(part_2(r#"[1,{"c":"red","b":2},3]"#), "4");
+        assert_eq!(part_2(r#"{"d":"red","e":[1,2,3,4],"f":5}"#), "0");
+        assert_eq!(part_2(r#"[1,"red",5]"#), "6");
     }
 }
