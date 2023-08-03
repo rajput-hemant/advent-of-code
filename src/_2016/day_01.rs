@@ -12,7 +12,7 @@ fn parse_input(input: &str) -> Vec<(char, i32)> {
         .collect()
 }
 
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     let (x, y, _) = parse_input(input)
         .into_iter()
         .fold((0, 0, 0), |(x, y, dir), (turn, steps)| {
@@ -26,7 +26,7 @@ pub fn part_1(input: &str) -> String {
         });
 
     // calculate the Manhattan distance by taking the absolute sum of x and y coordinates
-    (x.abs() + y.abs()).to_string()
+    (x.abs() + y.abs()) as usize
 }
 
 #[cfg(test)]
@@ -35,8 +35,8 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1("R2, L3"), "5");
-        assert_eq!(part_1("R2, R2, R2"), "2");
-        assert_eq!(part_1("R5, L5, R5, R3"), "12");
+        assert_eq!(part_1("R2, L3"), 5);
+        assert_eq!(part_1("R2, R2, R2"), 2);
+        assert_eq!(part_1("R5, L5, R5, R3"), 12);
     }
 }

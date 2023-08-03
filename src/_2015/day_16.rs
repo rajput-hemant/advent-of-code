@@ -4,15 +4,15 @@ use std::collections::HashMap;
 
 use regex::Regex;
 
-type Comparator = Box<dyn Fn(i64) -> bool>;
+type Comparator = Box<dyn Fn(usize) -> bool>;
 
 struct Aunt {
-    id: i64,
-    properties: HashMap<String, i64>,
+    id: usize,
+    properties: HashMap<String, usize>,
 }
 
 impl Aunt {
-    fn new(id: i64) -> Aunt {
+    fn new(id: usize) -> Aunt {
         Aunt {
             id,
             properties: HashMap::new(),
@@ -20,7 +20,7 @@ impl Aunt {
     }
 }
 
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     let mut readings: HashMap<String, Comparator> = HashMap::new();
 
     readings.insert("children".to_string(), equal_to(3));
@@ -34,10 +34,10 @@ pub fn part_1(input: &str) -> String {
     readings.insert("cars".to_string(), equal_to(2));
     readings.insert("perfumes".to_string(), equal_to(1));
 
-    find_aunt_with_readings(parse_aunt(input), &readings).to_string()
+    find_aunt_with_readings(parse_aunt(input), &readings)
 }
 
-pub fn part_2(input: &str) -> String {
+pub fn part_2(input: &str) -> usize {
     let mut readings: HashMap<String, Comparator> = HashMap::new();
 
     readings.insert("children".to_string(), equal_to(3));
@@ -51,7 +51,7 @@ pub fn part_2(input: &str) -> String {
     readings.insert("cars".to_string(), equal_to(2));
     readings.insert("perfumes".to_string(), equal_to(1));
 
-    find_aunt_with_readings(parse_aunt(input), &readings).to_string()
+    find_aunt_with_readings(parse_aunt(input), &readings)
 }
 
 fn parse_aunt(input: &str) -> Vec<Aunt> {
@@ -60,7 +60,7 @@ fn parse_aunt(input: &str) -> Vec<Aunt> {
         .lines()
         .enumerate()
         .map(|(i, line)| {
-            let mut aunt = Aunt::new(i as i64 + 1);
+            let mut aunt = Aunt::new(i as usize + 1);
             re.captures_iter(line).for_each(|cap| {
                 aunt.properties
                     .insert(cap[1].to_string(), cap[2].parse().unwrap());
@@ -70,7 +70,7 @@ fn parse_aunt(input: &str) -> Vec<Aunt> {
         .collect()
 }
 
-fn find_aunt_with_readings(aunts: Vec<Aunt>, readings: &HashMap<String, Comparator>) -> i64 {
+fn find_aunt_with_readings(aunts: Vec<Aunt>, readings: &HashMap<String, Comparator>) -> usize {
     aunts
         .into_iter()
         .find(|aunt| {
@@ -87,15 +87,15 @@ fn find_aunt_with_readings(aunts: Vec<Aunt>, readings: &HashMap<String, Comparat
         .id
 }
 
-fn equal_to(x: i64) -> Comparator {
+fn equal_to(x: usize) -> Comparator {
     Box::new(move |y| x == y)
 }
 
-fn less_than(x: i64) -> Comparator {
+fn less_than(x: usize) -> Comparator {
     Box::new(move |y| y < x)
 }
 
-fn greater_than(x: i64) -> Comparator {
+fn greater_than(x: usize) -> Comparator {
     Box::new(move |y| y > x)
 }
 
@@ -109,11 +109,11 @@ Sue 3: cars: 2, akitas: 0, perfumes: 1";
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1(INPUT), "3");
+        assert_eq!(part_1(INPUT), 3);
     }
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2(INPUT), "3");
+        assert_eq!(part_2(INPUT), 3);
     }
 }

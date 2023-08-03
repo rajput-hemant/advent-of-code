@@ -1,4 +1,4 @@
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     input
         .lines()
         .filter(|line| {
@@ -10,10 +10,9 @@ pub fn part_1(input: &str) -> String {
                 && !["ab", "cd", "pq", "xy"].iter().any(|s| line.contains(s))
         })
         .count()
-        .to_string()
 }
 
-pub fn part_2(input: &str) -> String {
+pub fn part_2(input: &str) -> usize {
     input
         .lines()
         .filter(|line| {
@@ -28,7 +27,6 @@ pub fn part_2(input: &str) -> String {
             && line_bytes.windows(3).any(|w| w[0] == w[2])
         })
         .count()
-        .to_string()
 }
 
 #[cfg(test)]
@@ -37,18 +35,18 @@ mod tests {
 
     #[test]
     fn part_1_test() {
-        assert_eq!(part_1("ugknbfddgicrmopn"), "1");
-        assert_eq!(part_1("aaa"), "1");
-        assert_eq!(part_1("jchzalrnumimnmhp"), "0");
-        assert_eq!(part_1("haegwjzuvuyypxyu"), "0");
-        assert_eq!(part_1("dvszwmarrgswjxmb"), "0");
+        assert_eq!(part_1("ugknbfddgicrmopn"), 1);
+        assert_eq!(part_1("aaa"), 1);
+        assert_eq!(part_1("jchzalrnumimnmhp"), 0);
+        assert_eq!(part_1("haegwjzuvuyypxyu"), 0);
+        assert_eq!(part_1("dvszwmarrgswjxmb"), 0);
     }
 
     #[test]
     fn part_2_test() {
-        assert_eq!(part_2("qjhvhtzxzqqjkmpb"), "1");
-        assert_eq!(part_2("xxyxx"), "1");
-        assert_eq!(part_2("uurcxstgmygtbstg"), "0");
-        assert_eq!(part_2("ieodomkazucvgmuy"), "0");
+        assert_eq!(part_2("qjhvhtzxzqqjkmpb"), 1);
+        assert_eq!(part_2("xxyxx"), 1);
+        assert_eq!(part_2("uurcxstgmygtbstg"), 0);
+        assert_eq!(part_2("ieodomkazucvgmuy"), 0);
     }
 }

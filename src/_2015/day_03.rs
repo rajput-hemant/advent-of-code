@@ -1,9 +1,9 @@
 use std::collections::HashSet;
 
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     let (mut x, mut y) = (0, 0); // coordinates
 
-    (input
+    input
         .chars() // split into chars
         .fold(HashSet::new(), |mut acc, c| {
             acc.insert((x, y));
@@ -20,15 +20,14 @@ pub fn part_1(input: &str) -> String {
 
             acc
         })
-        .len())
-    .to_string()
+        .len()
 }
 
-pub fn part_2(input: &str) -> String {
+pub fn part_2(input: &str) -> usize {
     let (mut x, mut y) = ([0, 0], [0, 0]); // coordinates for santa and robo-santa
     let mut is_robo = 0; // flag to switch between santas
 
-    (input
+    input
         .chars()
         .fold(HashSet::new(), |mut acc, c| {
             acc.insert((x[is_robo], y[is_robo])); // insert current santa's coordinates
@@ -47,8 +46,7 @@ pub fn part_2(input: &str) -> String {
 
             acc
         })
-        .len())
-    .to_string()
+        .len()
 }
 
 #[cfg(test)]
@@ -57,15 +55,15 @@ mod tests {
 
     #[test]
     fn part_1_examples() {
-        assert_eq!(part_1(">"), "2");
-        assert_eq!(part_1("^>v<"), "4");
-        assert_eq!(part_1("^v^v^v^v^v"), "2");
+        assert_eq!(part_1(">"), 2);
+        assert_eq!(part_1("^>v<"), 4);
+        assert_eq!(part_1("^v^v^v^v^v"), 2);
     }
 
     #[test]
     fn part_2_examples() {
-        assert_eq!(part_2("^v"), "3");
-        assert_eq!(part_2("^>v<"), "3");
-        assert_eq!(part_2("^v^v^v^v^v"), "11");
+        assert_eq!(part_2("^v"), 3);
+        assert_eq!(part_2("^>v<"), 3);
+        assert_eq!(part_2("^v^v^v^v^v"), 11);
     }
 }

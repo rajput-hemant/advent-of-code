@@ -1,4 +1,4 @@
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     input
         .lines()
         .map(|line| line.split(" ").collect::<Vec<_>>())
@@ -44,11 +44,10 @@ pub fn part_1(input: &str) -> String {
         })
         .iter()
         .map(|row| row.iter().filter(|&light| *light).count())
-        .sum::<usize>()
-        .to_string()
+        .sum()
 }
 
-pub fn part_2(input: &str) -> String {
+pub fn part_2(input: &str) -> usize {
     input
         .lines()
         .map(|line| line.split(" ").collect::<Vec<_>>())
@@ -96,8 +95,7 @@ pub fn part_2(input: &str) -> String {
         })
         .iter()
         .map(|row| row.iter().sum::<usize>())
-        .sum::<usize>()
-        .to_string()
+        .sum()
 }
 
 fn parse_range(range: &str) -> (usize, usize) {
@@ -111,14 +109,14 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1("turn on 0,0 through 999,999"), "1000000");
-        assert_eq!(part_1("toggle 0,0 through 999,0"), "1000");
-        assert_eq!(part_1("turn off 499,499 through 500,500"), "0");
+        assert_eq!(part_1("turn on 0,0 through 999,999"), 1000000);
+        assert_eq!(part_1("toggle 0,0 through 999,0"), 1000);
+        assert_eq!(part_1("turn off 499,499 through 500,500"), 0);
     }
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2("turn on 0,0 through 0,0"), "1");
-        assert_eq!(part_2("toggle 0,0 through 999,999"), "2000000");
+        assert_eq!(part_2("turn on 0,0 through 0,0"), 1);
+        assert_eq!(part_2("toggle 0,0 through 999,999"), 2000000);
     }
 }

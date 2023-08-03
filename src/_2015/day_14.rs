@@ -1,7 +1,7 @@
 struct Reindeer {
-    speed: u32,
-    flight_time: u32,
-    rest_time: u32,
+    speed: usize,
+    flight_time: usize,
+    rest_time: usize,
 }
 
 fn parse_input(input: &str) -> Vec<Reindeer> {
@@ -22,7 +22,7 @@ fn parse_input(input: &str) -> Vec<Reindeer> {
         .collect()
 }
 
-pub fn part_1(input: &str, time: u32) -> String {
+pub fn part_1(input: &str, time: usize) -> usize {
     parse_input(input)
         .iter()
         .map(|r| {
@@ -41,10 +41,9 @@ pub fn part_1(input: &str, time: u32) -> String {
         })
         .max()
         .unwrap()
-        .to_string()
 }
 
-pub fn part_2(input: &str, time: u32) -> String {
+pub fn part_2(input: &str, time: usize) -> usize {
     let reindeers = parse_input(input);
     let mut scores = vec![0; reindeers.len()]; // scores of each reindeers
 
@@ -82,7 +81,7 @@ pub fn part_2(input: &str, time: u32) -> String {
         max_distance_reindeers.iter().for_each(|&i| scores[i] += 1);
     });
 
-    scores.iter().max().unwrap().to_string()
+    *scores.iter().max().unwrap()
 }
 
 #[cfg(test)]
@@ -95,18 +94,18 @@ mod tests {
     #[test]
     fn test_part_1() {
         // 1120km at 1000th second
-        assert_eq!(part_1(INPUT, 1000), "1120");
+        assert_eq!(part_1(INPUT, 1000), 1120);
 
         // 2503km at 2503rd second
-        assert_eq!(part_1(INPUT, 2503), "2660");
+        assert_eq!(part_1(INPUT, 2503), 2660);
     }
 
     #[test]
     fn test_part_2() {
         // 689km at 1000th second
-        assert_eq!(part_2(INPUT, 1000), "689");
+        assert_eq!(part_2(INPUT, 1000), 689);
 
         // 1564km at 2503rd second
-        assert_eq!(part_2(INPUT, 2503), "1564");
+        assert_eq!(part_2(INPUT, 2503), 1564);
     }
 }

@@ -1,5 +1,5 @@
-pub fn part_1(input: &str) -> String {
-    count_visible_trees(&parse_input(input)).to_string()
+pub fn part_1(input: &str) -> usize {
+    count_visible_trees(&parse_input(input)) as usize
 }
 
 fn parse_input(input: &str) -> Vec<Vec<i32>> {
@@ -65,6 +65,6 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1(INPUT), "21");
+        assert_eq!(part_1(INPUT), 21);
     }
 }

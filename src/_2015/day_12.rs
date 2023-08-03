@@ -1,6 +1,6 @@
 use serde_json::Value;
 
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     input
         .chars()
         .fold((0, String::new()), |(mut sum, mut num), c| {
@@ -19,21 +19,19 @@ pub fn part_1(input: &str) -> String {
             }
             (sum, num)
         })
-        .0
-        .to_string()
+        .0 as usize
 }
 
-pub fn part_1_reg(input: &str) -> String {
+pub fn part_1_reg(input: &str) -> usize {
     regex::Regex::new(r"-?\d+")
         .unwrap()
         .find_iter(input)
         .map(|m| m.as_str().parse::<i32>().unwrap())
-        .sum::<i32>()
-        .to_string()
+        .sum::<i32>() as usize
 }
 
-pub fn part_2(input: &str) -> String {
-    sum_json(&serde_json::from_str(input).unwrap()).to_string()
+pub fn part_2(input: &str) -> usize {
+    sum_json(&serde_json::from_str(input).unwrap()) as usize
 }
 
 fn sum_json(v: &Value) -> i64 {
@@ -57,30 +55,30 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1("[1,2,3]"), "6");
-        assert_eq!(part_1(r#"{"a":2,"b":4}"#), "6");
-        assert_eq!(part_1("[[[3]]]"), "3");
-        assert_eq!(part_1(r#"{"a":{"b":4},"c":-1}"#), "3");
-        assert_eq!(part_1(r#"{"a":[-1,1]}"#), "0");
-        assert_eq!(part_1(r#"[-1,{"a":1}]"#), "0");
-        assert_eq!(part_1("[]"), "0");
-        assert_eq!(part_1("{}"), "0");
+        assert_eq!(part_1("[1,2,3]"), 6);
+        assert_eq!(part_1(r#"{"a":2,"b":4}"#), 6);
+        assert_eq!(part_1("[[[3]]]"), 3);
+        assert_eq!(part_1(r#"{"a":{"b":4},"c":-1}"#), 3);
+        assert_eq!(part_1(r#"{"a":[-1,1]}"#), 0);
+        assert_eq!(part_1(r#"[-1,{"a":1}]"#), 0);
+        assert_eq!(part_1("[]"), 0);
+        assert_eq!(part_1("{}"), 0);
 
-        assert_eq!(part_1_reg("[1,2,3]"), "6");
-        assert_eq!(part_1_reg(r#"{"a":2,"b":4}"#), "6");
-        assert_eq!(part_1_reg("[[[3]]]"), "3");
-        assert_eq!(part_1_reg(r#"{"a":{"b":4},"c":-1}"#), "3");
-        assert_eq!(part_1_reg(r#"{"a":[-1,1]}"#), "0");
-        assert_eq!(part_1_reg(r#"[-1,{"a":1}]"#), "0");
-        assert_eq!(part_1_reg("[]"), "0");
-        assert_eq!(part_1_reg("{}"), "0");
+        assert_eq!(part_1_reg("[1,2,3]"), 6);
+        assert_eq!(part_1_reg(r#"{"a":2,"b":4}"#), 6);
+        assert_eq!(part_1_reg("[[[3]]]"), 3);
+        assert_eq!(part_1_reg(r#"{"a":{"b":4},"c":-1}"#), 3);
+        assert_eq!(part_1_reg(r#"{"a":[-1,1]}"#), 0);
+        assert_eq!(part_1_reg(r#"[-1,{"a":1}]"#), 0);
+        assert_eq!(part_1_reg("[]"), 0);
+        assert_eq!(part_1_reg("{}"), 0);
     }
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2("[1,2,3]"), "6");
-        assert_eq!(part_2(r#"[1,{"c":"red","b":2},3]"#), "4");
-        assert_eq!(part_2(r#"{"d":"red","e":[1,2,3,4],"f":5}"#), "0");
-        assert_eq!(part_2(r#"[1,"red",5]"#), "6");
+        assert_eq!(part_2("[1,2,3]"), 6);
+        assert_eq!(part_2(r#"[1,{"c":"red","b":2},3]"#), 4);
+        assert_eq!(part_2(r#"{"d":"red","e":[1,2,3,4],"f":5}"#), 0);
+        assert_eq!(part_2(r#"[1,"red",5]"#), 6);
     }
 }

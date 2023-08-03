@@ -1,10 +1,10 @@
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     input
         .lines()
         .map(|line| {
             let mut dims = line
                 .split('x')
-                .map(|x| x.parse::<i32>().unwrap())
+                .map(|x| x.parse::<usize>().unwrap())
                 .collect::<Vec<_>>();
 
             dims.sort_unstable();
@@ -16,16 +16,15 @@ pub fn part_1(input: &str) -> String {
             ((2 * l * w) + (2 * w * h) + (2 * h * l)) // surface area
              + (l * w) // the area of the smallest side
         })
-        .sum::<i32>()
-        .to_string()
+        .sum()
 }
-pub fn part_2(input: &str) -> String {
+pub fn part_2(input: &str) -> usize {
     input
         .lines()
         .map(|line| {
             let mut dims = line
                 .split('x')
-                .map(|x| x.parse::<i32>().unwrap())
+                .map(|x| x.parse::<usize>().unwrap())
                 .collect::<Vec<_>>();
 
             dims.sort_unstable();
@@ -37,8 +36,7 @@ pub fn part_2(input: &str) -> String {
             (2 * l) + (2 * w) // perimeter of the smallest side
                 + (l * w * h) // volume
         })
-        .sum::<i32>()
-        .to_string()
+        .sum()
 }
 
 #[cfg(test)]
@@ -47,13 +45,13 @@ mod tests {
 
     #[test]
     fn part_1_examples() {
-        assert_eq!(part_1("2x3x4"), "58");
-        assert_eq!(part_1("1x1x10"), "43");
+        assert_eq!(part_1("2x3x4"), 58);
+        assert_eq!(part_1("1x1x10"), 43);
     }
 
     #[test]
     fn part_2_examples() {
-        assert_eq!(part_2("2x3x4"), "34");
-        assert_eq!(part_2("1x1x10"), "14");
+        assert_eq!(part_2("2x3x4"), 34);
+        assert_eq!(part_2("1x1x10"), 14);
     }
 }

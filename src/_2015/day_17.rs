@@ -1,19 +1,16 @@
 use itertools::Itertools;
 
-pub fn part_1(input: &str, litres: i32) -> String {
-    find_combinations(&parse_input(input), litres)
-        .len()
-        .to_string()
+pub fn part_1(input: &str, litres: i32) -> usize {
+    find_combinations(&parse_input(input), litres).len()
 }
 
-pub fn part_2(input: &str, litres: i32) -> String {
+pub fn part_2(input: &str, litres: i32) -> usize {
     let combinations = find_combinations(&parse_input(input), litres);
     combinations
         .iter()
         // only keep the combinations with the minimum number of containers
         .filter(|c| c.len() == combinations.iter().map(|c| c.len()).min().unwrap())
         .count()
-        .to_string()
 }
 
 fn parse_input(input: &str) -> Vec<i32> {
@@ -33,16 +30,15 @@ fn find_combinations(containers: &Vec<i32>, total_liters: i32) -> Vec<Vec<i32>> 
         .collect()
 }
 
-// pub fn part_1(input: &str, litres: i32) -> String {
+// pub fn part_1(input: &str, litres: i32) -> usize {
 //     count_combinations(
 //         &input.lines().map(|c| c.parse::<i32>().unwrap()).collect(),
 //         litres,
 //         0,
 //     )
-//     .to_string()
 // }
 
-// fn count_combinations(containers: &Vec<i32>, total_liters: i32, index: usize) -> i32 {
+// fn count_combinations(containers: &Vec<i32>, total_liters: i32, index: usize) -> usize {
 //     // if we have no more liters to fill, we have found a combination
 //     if total_liters == 0 {
 //         1
@@ -62,11 +58,11 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1("25\n15\n10\n5\n5", 25), "3");
+        assert_eq!(part_1("25\n15\n10\n5\n5", 25), 3);
     }
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2("25\n15\n10\n5\n5", 25), "1");
+        assert_eq!(part_2("25\n15\n10\n5\n5", 25), 1);
     }
 }

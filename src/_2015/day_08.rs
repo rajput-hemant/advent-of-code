@@ -1,4 +1,4 @@
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     input
         .lines()
         .map(|line| {
@@ -21,11 +21,10 @@ pub fn part_1(input: &str) -> String {
 
             line.len() - count
         })
-        .sum::<usize>()
-        .to_string()
+        .sum()
 }
 
-pub fn part_2(input: &str) -> String {
+pub fn part_2(input: &str) -> usize {
     input
         .lines()
         .map(|line| {
@@ -41,8 +40,7 @@ pub fn part_2(input: &str) -> String {
 
             count - line.len()
         })
-        .sum::<usize>()
-        .to_string()
+        .sum()
 }
 
 #[cfg(test)]
@@ -51,10 +49,10 @@ mod tests {
 
     #[test]
     fn part_1_test() {
-        assert_eq!(part_1(r#""""#), "2");
-        assert_eq!(part_1(r#""abc""#), "2");
-        assert_eq!(part_1(r#""aaa\"aaa""#), "3");
-        assert_eq!(part_1(r#""\x27""#), "5");
+        assert_eq!(part_1(r#""""#), 2);
+        assert_eq!(part_1(r#""abc""#), 2);
+        assert_eq!(part_1(r#""aaa\"aaa""#), 3);
+        assert_eq!(part_1(r#""\x27""#), 5);
         assert_eq!(
             part_1(
                 r#"""
@@ -62,16 +60,16 @@ mod tests {
         "aaa\"aaa"
         "\x27""#
             ),
-            "12"
+            12
         );
     }
 
     #[test]
     fn part_2_test() {
-        assert_eq!(part_2(r#""""#), "4");
-        assert_eq!(part_2(r#""abc""#), "4");
-        assert_eq!(part_2(r#""aaa\"aaa""#), "6");
-        assert_eq!(part_2(r#""\x27""#), "5");
+        assert_eq!(part_2(r#""""#), 4);
+        assert_eq!(part_2(r#""abc""#), 4);
+        assert_eq!(part_2(r#""aaa\"aaa""#), 6);
+        assert_eq!(part_2(r#""\x27""#), 5);
         assert_eq!(
             part_2(
                 r#"""
@@ -79,7 +77,7 @@ mod tests {
         "aaa\"aaa"
         "\x27""#
             ),
-            "19"
+            19
         );
     }
 }

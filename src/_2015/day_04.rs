@@ -1,4 +1,4 @@
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     let mut i = 0;
 
     loop {
@@ -16,21 +16,21 @@ pub fn part_1(input: &str) -> String {
         // https://gist.github.com/gkbrk/2e4835e3a17b3fb6e1e7
 
         if hash[0] == 0 && hash[1] == 0 && hash[2] >> 4 == 0 {
-            return i.to_string();
+            return i;
         }
 
         i += 1;
     }
 }
 
-pub fn part_2(input: &str) -> String {
+pub fn part_2(input: &str) -> usize {
     let mut i = 0;
 
     loop {
         let hash = md5::compute(format!("{input}{i}",));
 
         if hash[0] == 0 && hash[1] == 0 && hash[2] == 0 {
-            return i.to_string();
+            return i;
         }
 
         i += 1;
@@ -43,13 +43,13 @@ mod tests {
 
     #[test]
     fn part_1_example() {
-        assert_eq!(part_1("abcdef"), "609043");
-        assert_eq!(part_1("pqrstuv"), "1048970");
+        assert_eq!(part_1("abcdef"), 609043);
+        assert_eq!(part_1("pqrstuv"), 1048970);
     }
 
     #[test]
     fn part_2_example() {
-        assert_eq!(part_2("abcdef"), "6742839");
-        assert_eq!(part_2("pqrstuv"), "5714438");
+        assert_eq!(part_2("abcdef"), 6742839);
+        assert_eq!(part_2("pqrstuv"), 5714438);
     }
 }

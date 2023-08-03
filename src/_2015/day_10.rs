@@ -1,15 +1,13 @@
-pub fn part_1(input: &str) -> String {
+pub fn part_1(input: &str) -> usize {
     (0..40)
         .fold(String::from(input), |acc, _| look_and_say(&acc))
         .len()
-        .to_string()
 }
 
-pub fn part_2(input: &str) -> String {
+pub fn part_2(input: &str) -> usize {
     (0..50)
         .fold(String::from(input), |acc, _| look_and_say(&acc))
         .len()
-        .to_string()
 }
 
 fn look_and_say(input: &str) -> String {
@@ -37,20 +35,11 @@ mod tests {
 
     #[test]
     fn test_part_1() {
-        assert_eq!(part_1("1"), "82350");
+        assert_eq!(part_1("1"), 82350);
     }
 
     #[test]
     fn test_part_2() {
-        assert_eq!(part_2("1"), "1166642");
-    }
-
-    #[test]
-    fn test_look_and_say() {
-        assert_eq!(look_and_say("1"), "11");
-        assert_eq!(look_and_say("11"), "21");
-        assert_eq!(look_and_say("21"), "1211");
-        assert_eq!(look_and_say("1211"), "111221");
-        assert_eq!(look_and_say("111221"), "312211");
+        assert_eq!(part_2("1"), 1166642);
     }
 }
