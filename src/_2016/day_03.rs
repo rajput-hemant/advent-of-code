@@ -25,20 +25,41 @@ pub fn part_2(input: &str) -> usize {
         })
         .collect::<Vec<_>>()
         .chunks(3)
-        .fold(0, |mut count, lines| {
-            (0..3).for_each(|i| {
+        .flat_map(|lines| {
+            (0..3).filter(|&i| {
                 let mut dims = vec![lines[0][i], lines[1][i], lines[2][i]];
-
                 dims.sort();
 
-                if dims[0] + dims[1] > dims[2] {
-                    count += 1;
-                }
-            });
-
-            count
+                dims[0] + dims[1] > dims[2]
+            })
         })
+        .count()
 }
+
+// pub fn part_2(input: &str) -> usize {
+//     input
+//         .lines()
+//         .map(|line| {
+//             line.split_whitespace()
+//                 .map(|x| x.parse::<usize>().unwrap())
+//                 .collect::<Vec<_>>()
+//         })
+//         .collect::<Vec<_>>()
+//         .chunks(3)
+//         .fold(0, |mut count, lines| {
+//             (0..3).for_each(|i| {
+//                 let mut dims = vec![lines[0][i], lines[1][i], lines[2][i]];
+
+//                 dims.sort();
+
+//                 if dims[0] + dims[1] > dims[2] {
+//                     count += 1;
+//                 }
+//             });
+
+//             count
+//         })
+// }
 
 #[cfg(test)]
 mod tests {
