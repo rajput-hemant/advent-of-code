@@ -42,6 +42,33 @@ pub fn part_1(input: &str) -> usize {
         .sum()
 }
 
+pub fn part_2(input: &str) -> usize {
+    input
+        .lines()
+        .map(|line| {
+            let (_, name, sector_id) = regex_captures!(r"([a-z-]+)-(\d+)\[[a-z]+\]", line).unwrap();
+            let sector_id = sector_id.parse::<usize>().unwrap();
+
+            let decrypted_name: String = name
+                .chars()
+                .map(|c| {
+                    if c == '-' {
+                        ' '
+                    } else {
+                        ((c as u8 - b'a' + (sector_id % 26) as u8) % 26 + b'a') as char
+                    }
+                })
+                .collect();
+
+            if decrypted_name.contains("northpole") {
+                sector_id
+            } else {
+                0
+            }
+        })
+        .sum()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -57,5 +84,10 @@ mod tests {
             ),
             151
         );
+    }
+
+    #[test]
+    fn test_part_2() {
+        assert_eq!(part_2("qzmt-zixmtkozy-ivhz-343[abcde]"), 0);
     }
 }
