@@ -26,37 +26,31 @@ pub fn part_2(input: &str) -> usize {
     input
         .lines()
         .map(|l| {
-            let (mut first, mut last) = (String::default(), String::default());
-
-            let mut str = String::default();
-
-            l.chars().for_each(|c| {
-                let mut digit = String::default();
-
-                if c.is_numeric() {
-                    digit.push(c);
-                } else {
-                    str.push(c);
-
-                    digits_map.iter().for_each(|(k, v)| {
-                        if str.ends_with(k) {
-                            digit = v.to_string();
-                        }
-                    });
-                }
-
-                if !digit.is_empty() {
-                    if first.is_empty() {
-                        first = digit;
+            let (first, last, _) = l.chars().fold(
+                (String::default(), String::default(), String::default()),
+                |(mut first, mut last, mut str), c| {
+                    let digit = if c.is_numeric() {
+                        c.to_string()
                     } else {
-                        last = digit;
-                    }
-                }
-            });
+                        str.push(c);
 
-            if last.is_empty() {
-                last = first.clone();
-            }
+                        digits_map
+                            .iter()
+                            .find_map(|(k, v)| str.ends_with(k).then(|| v.to_string()))
+                            .unwrap_or_default()
+                    };
+
+                    if !digit.is_empty() {
+                        last = digit.clone();
+
+                        if first.is_empty() {
+                            first = digit;
+                        }
+                    }
+
+                    (first, last, str)
+                },
+            );
 
             format!("{}{}", first, last).parse::<usize>().unwrap()
         })
@@ -65,8 +59,6 @@ pub fn part_2(input: &str) -> usize {
 
 #[cfg(test)]
 mod tests {
-    use std::fs;
-
     use super::*;
 
     #[test]
